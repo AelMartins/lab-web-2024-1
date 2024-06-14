@@ -15,6 +15,7 @@
     "@hapi/hapi": "^21.3.9",
     "@hapi/inert": "^7.1.0",
     "@hapi/vision": "^7.0.3",
+    "dotenv": "^16.4.5",
     "hapi-swagger": "^17.2.1",
     "joi": "^17.12.3",
     "klaw-sync": "^6.0.0",

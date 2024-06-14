@@ -1,4 +1,5 @@
 const {server, plugins} = require('./server');
+require('dotenv').config();
 
 (async () => {
     try {
