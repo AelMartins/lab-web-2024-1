@@ -1,26 +1,47 @@
-const repository = require('./product-repository')
+const Sequelize = require('sequelize');
+const database = require('../../../config/db');
+const Author = require('../authors/author-model');
 
-const create = async (product) => {
+const Product = database.sequelize.define('Product', {
+    id: {
+        type: Sequelize.INTEGER,
+        autoIncrement: true,
+        allowNull: false,
+        primaryKey: true,
+        field: 'codigo'
+    },
+    title: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        field: 'titulo'
+    },
+    authorId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        field: 'autor_codigo',
+        references: {
+            model: Author,
+            key: 'id'
+        }
+    },
+    publishedDate: {
+        type: Sequelize.DATE,
+        allowNull: true,
+        field: 'data_publicacao'
+    },
+    isbn: {
+        type: Sequelize.STRING,
+        allowNull: true,
+        field: 'isbn'
+    },
+    summary: {
+        type: Sequelize.TEXT,
+        allowNull: true,
+        field: 'resumo'
+    }
+}, {
+    timestamps: false,
+    tableName: 'tb_produto'
+});
 
-    //logica negocio
-    return repository.save(product);
-}
-
-const list = async (filter) => {
-    return repository.findAll(filter);
-}
-
-const findById = async (id) => {
-    return repository.findById(id);
-}
-
-const deleteById = async (id) => {
-    repository.deleteById(id);
-}
-
-module.exports = {
-    create,
-    list,
-    findById,
-    deleteById
-}
+module.exports = Product;
