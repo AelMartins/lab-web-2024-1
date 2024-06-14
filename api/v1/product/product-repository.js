@@ -1,6 +1,6 @@
 const productModel = require('./product-model');
 const {Op} = require('sequelize');
-const Category = require('../category/category-model');
+const Category = require('../author/author-model');
 
 
 
