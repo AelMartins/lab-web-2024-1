@@ -3,7 +3,7 @@ const routes = require('./routes');
 const Inert = require('@hapi/inert');
 const Vision = require('@hapi/vision');
 const HapiSwagger = require('hapi-swagger');
-const {version} = require('./package.json');
+const { version } = require('./package.json');
 
 const server = Hapi.server({
     port: 5000,
@@ -19,24 +19,34 @@ const swaggerPlugin = [
             documentationPath: '/docs',
             schemes: ['http', 'https'],
             info: {
-                title: 'API Aula laboratorio web',
-                version: version
+                title: 'API de Cadastro de Livros e Autores',
+                version: version,
+                description: 'Esta API permite cadastrar, atualizar, listar e deletar livros e autores.',
             }
-        }
-    }
-]
-
-
-const plugins = [
-    {
-        plugin: routes,
-        options: {
-            routesBaseDir: './api'
         }
     }
 ];
 
+const init = async () => {
+    await server.register([
+        ...swaggerPlugin,
+        {
+            plugin: routes,
+            options: {
+                routesBaseDir: './api'
+            }
+        }
+    ]);
 
-plugins.push(...swaggerPlugin);
+    await server.start();
+    console.log('Server running on %s', server.info.uri);
+};
 
-module.exports = {server, plugins};
+process.on('unhandledRejection', (err) => {
+    console.log(err);
+    process.exit(1);
+});
+
+init();
+
+module.exports = { server };
