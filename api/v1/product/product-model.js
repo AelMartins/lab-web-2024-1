@@ -1,41 +1,49 @@
 const Sequelize = require('sequelize');
 const database = require('../../../config/db');
-const Category = require('../author/author-model');
+const Author = require('../author/author-model');
 
 const Product = database.sequelize.define('Product', {
     id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
-        allowNull: true,
+        allowNull: false,
         primaryKey: true,
-        field: 'codigo' //nome do atributo do banco
+        field: 'codigo'
     },
-    name: {
+    title: {
         type: Sequelize.STRING,
         allowNull: false,
-        field: 'desc_prod'
+        field: 'titulo'
     },
-    value: {
-        type: Sequelize.DECIMAL(15,2),
-        field: 'vl_unit'
-    },
-    quantity: {
+    authorId: {
         type: Sequelize.INTEGER,
-        field: 'qtd'
-    },
-    categoryId: {
-        type: Sequelize.INTEGER,
-        field: 'cod_cat',
+        allowNull: false,
+        field: 'autor_codigo',
         references: {
-            model: 'category',
+            model: Author,
             key: 'id'
         }
+    },
+    publishedDate: {
+        type: Sequelize.DATE,
+        allowNull: true,
+        field: 'data_publicacao'
+    },
+    isbn: {
+        type: Sequelize.STRING,
+        allowNull: true,
+        field: 'isbn'
+    },
+    summary: {
+        type: Sequelize.TEXT,
+        allowNull: true,
+        field: 'resumo'
     }
 }, {
     timestamps: false,
-    tableName: 'tb_produto' //nome da tabela banco
+    tableName: 'tb_produto'
 });
 
-Product.belongsTo(Category, {foreignKey: 'categoryId'});
+Product.belongsTo(Author, { foreignKey: 'authorId' });
 
 module.exports = Product;
