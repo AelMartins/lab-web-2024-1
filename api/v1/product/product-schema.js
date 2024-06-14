@@ -1,60 +1,59 @@
 const Joi = require("joi");
 
-const createProductsSchema = {
+const createBooksSchema = {
     payload: Joi.object({
-        name: Joi
-                .string()
-                .min(3)
-                .max(60)
-                .required(),
-        value: Joi.number(),
-        quantity: Joi.number()
-                     .positive()
-                     .integer()
-                     .required(),
-        category: Joi.object( {
-            id: Joi.number().integer()
-        })
+        title: Joi
+            .string()
+            .min(3)
+            .max(60)
+            .required(),
+        authorId: Joi
+            .string()
+            .required(),
+        publishedDate: Joi
+            .date()
+            .optional(),
+        isbn: Joi
+            .string()
+            .optional(),
+        summary: Joi
+            .string()
+            .optional()
     })
 };
 
 const getById = {
     params: Joi.object({
         id: Joi
-            .number()
-            .integer()
+            .string()
             .required()
     })
-}
+};
 
 const deleteById = {
     params: Joi.object({
         id: Joi
-            .number()
-            .integer()
+            .string()
             .required()
     })
-}
+};
 
-const getProducts = {
+const getBooks = {
     query: Joi.object({
-        name: Joi
+        title: Joi
             .string()
-            .min(1),
-        quantity: Joi
-            .number()
-            .integer()
-            .min(1),
-        status: Joi
-                .string()
-                .valid('ativo', 'inativo', 'pendente')
-                .default('ativo')
+            .min(1)
+            .optional(),
+        'author.name': Joi
+            .string()
+            .min(1)
+            .optional()
     })
-}
+};
 
 module.exports = {
-    createProductsSchema, 
+    createBooksSchema, 
     getById,
-    getProducts,
+    getBooks,
     deleteById
 };
