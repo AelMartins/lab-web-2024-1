@@ -27,26 +27,15 @@ const swaggerPlugin = [
     }
 ];
 
-const init = async () => {
-    await server.register([
-        ...swaggerPlugin,
-        {
-            plugin: routes,
-            options: {
-                routesBaseDir: './api'
-            }
+const plugins = [
+    {
+        plugin: routes,
+        options: {
+            routesBaseDir: './api'
         }
-    ]);
+    }
+];
 
-    await server.start();
-    console.log('Server running on %s', server.info.uri);
-};
+plugins.push(...swaggerPlugin);
 
-process.on('unhandledRejection', (err) => {
-    console.log(err);
-    process.exit(1);
-});
-
-init();
-
-module.exports = { server };
+module.exports = { server, plugins };

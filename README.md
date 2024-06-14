@@ -13,7 +13,7 @@ Configurar a o .env-<environment> com as variáveis de ambientes.
 ## Startup projeto
 
 ```
-    npm rum migrate
+    npm run migrate
 
     npm start
 ```
